@@ -151,6 +151,17 @@
                             <div class="templateCard">
                                 <div class="card-body">
                                     {{channel.name}}
+
+                                    <form action="{% url 'delete_chat' channel.id %}" method="post">
+                                        {% csrf_token %}
+                                        <button type="submit" 
+                                                name="editor_delete"
+                                                style="border: 0; background-color: #FFFFFF; float: right; transform: scale(1.2); margin-top: -30px;">
+
+                                            <img src="{% static 'img/delete.svg' %}">
+                                        </button>
+                                    </form>
+
                                 </div>
                             </div>
                         </a>
@@ -169,7 +180,7 @@
 
                 {% for user in users %}
                     <div class="el" id="{{user.phone}}">
-                        <a href="{% url 'staf' user.id %}" style="color:#000;">
+                        <a href="{% url 'user' user.id %}" style="color:#000;">
                             <div class="templateCard">
                                 <div class="card-body">
                                     {{user.phone}}

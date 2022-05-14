@@ -62,6 +62,15 @@ def staf(req, id=None):
             return render(req, 'work/staf.html', {'user': user, 'messages': messages})
 
 
+def user_page(req, id=None):
+    """Страница пользователя"""
+    messages = []
+    if req.user.is_authenticated:
+        user = User_tg.objects.get(id=id)
+        if user:
+            return render(req, 'work/user.html', {'user': user, 'messages': messages})
+
+
 def create_staf(req):
     """Создание персонала"""
     messages = []
@@ -131,3 +140,9 @@ def create_chat_view(req):
         return redirect('main', 'chats')
 
     return render(req, 'work/createchat.html')
+
+
+def delete_chat(req, id=None):
+    chat = Chat.objects.get(id = id)
+    chat.delete()
+    return redirect('main', 'chats')

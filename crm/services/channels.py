@@ -1,9 +1,11 @@
 from telethon.sync import TelegramClient
 from telethon.tl.functions.channels import CreateChannelRequest, CheckUsernameRequest, UpdateUsernameRequest, EditTitleRequest, DeleteChannelRequest
-from telethon.tl.functions.messages import CreateChatRequest
+from telethon.tl.functions.messages import CreateChatRequest, SendMessageRequest, ExportChatInviteRequest
 from telethon.tl.types import InputPeerChannel
 
 import asyncio
+
+from work.models import User_tg
 
 
 def create_channel(namechannel, descrchannel, linkchannel):
@@ -44,13 +46,39 @@ def delete_channel(username):
 
 def create_chat(title, users):
     """Создание чата"""
-    client = _get_client()
-    client(
-        CreateChatRequest(
-            users=users,
-            title=title
-        )
-    )
+    try:
+        client = _get_client()
+        id = client(
+            CreateChatRequest(
+                users=['Test_py_dnk_bot'],
+                title=title
+            )
+        ).chats[0].id
+        link = client(ExportChatInviteRequest(id)).link
+        
+        for el in users:
+            try:
+                user = User_tg.objects.get(phone = el)
+                client.send_message(
+                    'Test_py_dnk_bot',
+                    f'/send {user.id} {link}'
+                )
+
+            except Exception as e:
+                print(e)
+
+    except:
+        pass
+
+
+# def delete_chat(title, users):
+#     """Создание чата"""
+#     client = _get_client()
+#     client(
+#         DeleteChatRequest(
+
+#         )
+#     )
 
 
 def _get_client(): 

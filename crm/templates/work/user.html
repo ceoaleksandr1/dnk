@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block main %}
+
+    <link rel="stylesheet" href="{% static 'css/work/main.css' %}">
+
+    <div class="mainPage">
+
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="templateCard">
+                <h1 class="title-blok">Основная информация</h1>
+                <table class="table">
+                    <tbody style="width: 30vw;">
+                        <tr>
+                            <td>Номер телефона</td>
+                            <td><input type="text" name="phone" value="{{user.phone}}"></td>
+                        </tr>
+                        <tr>
+                            <td>Имя</td>
+                            <td>{{user.name}}</td>
+                        </tr>
+                        <tr>
+                            <td>Цель на платформе</td>
+                            <td>{{user.interes}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h1 class="title-blok">О компании</h1>
+                <table class="table">
+                    <tbody style="width: 30vw;">
+                        <tr>
+                            <td>Обо мне и компании</td>
+                            <td>{{user.about}}</td>
+                        </tr>
+                        <tr>
+                            <td>Статус</td>
+                            <td>{{user.status}}</td>
+                        </tr>
+                        <tr>
+                            <td>Годовой оборот</td>
+                            <td>{{user.mpy}}</td>
+                        </tr>
+                        <tr>
+                            <td>Индустрия</td>
+                            <td>{{user.industri}}</td>
+                        </tr>
+                        <tr>
+                            <td>Количество сотрудников</td>
+                            <td>{{user.staf_count}}</td>
+                        </tr>
+                        <tr>
+                            <td>Вид деятельности</td>
+                            <td>{{user.field_activiti}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h1 class="title-blok">Оценка себя как специалиста</h1>
+                <table class="table">
+                    <tbody style="width: 30vw;">
+                        <tr>
+                            <td>Отдел продаж</td>
+                            <td>{{user.otdel_prod}}</td>
+                        </tr>
+                        <tr>
+                            <td>Колл центер</td>
+                            <td>{{user.cool_center}}</td>
+                        </tr>
+                        <tr>
+                            <td>Маркетплейс</td>
+                            <td>{{user.marketplace}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <a href="{% url 'main' 'users' %}"><button class="button" type="button">Назад</button></a>
+            <!-- <button class="button" type="submit" name="delete">Удалить</button>
+            <button class="button" type="submit">Сохранить</button> -->
+        </form>
+
+    </div>
+
+{% endblock main %}
