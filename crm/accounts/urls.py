@@ -8,6 +8,7 @@ from .views import *
 urlpatterns = [
     path('login/', login_page, name='login'),
     path('logout/', logoutView, name='logout'),
+    path('profile/', profile_page, name='profile'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

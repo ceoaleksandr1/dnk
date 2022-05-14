@@ -10,6 +10,7 @@ urlpatterns = [
     path('create_staf/', create_staf, name='create_staf'),
     path('create_channel/', create_channel_view, name='create_channel'),
     path('channel/<int:id>', channel_view, name='channel'),
+    path('create_chat/', create_chat_view, name='create_chat'),
     path('<str:page>', main, name='main'),
 ]
 

@@ -1,22 +1,37 @@
 from accounts.models import User
-from .models import Channel
+from .models import Channel, User_tg, Chat
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password
 
-from services.channels import create_channel, change_channel, delete_channel
+from services.channels import create_channel, change_channel, delete_channel, create_chat
 
 
 def main(req, page=None):
     """Главноя страница со всеми меню"""
-    if req.user.is_authenticated:
-        if page == 'manage':
-            users = User.objects.all()
-            return render(req, 'work/main.html', {'page': page, 'users': users})
-        
-        elif page == 'channels':
+    if req.user.is_authenticated:        
+        if page == 'channels':
             channels = Channel.objects.all()
             return render(req, 'work/main.html', {'page': page, 'channels': channels})
+
+        elif page == 'users':
+            if req.method == "POST":
+                data = req.POST.dict()
+                user_tg = User_tg()
+                user_tg.phone = data['phone'].replace('(', '').replace(')', '').replace(' ', '').replace('-', '').replace('+', '')
+                user_tg.username = data['username']
+                user_tg.save()
+
+            users_tg = User_tg.objects.all()
+            return render(req, 'work/main.html', {'page': page, 'users': users_tg})
+
+        elif page == 'chats':
+            channels = Chat.objects.all()
+            return render(req, 'work/main.html', {'page': page, 'channels': channels})
+
+        else:
+            users = User.objects.all()
+            return render(req, 'work/main.html', {'page': page, 'users': users})
 
     else:
         return redirect('login')
@@ -101,3 +116,18 @@ def channel_view(req, id):
     
     else:
         return render(req, 'work/channel.html', {'channel': channel})
+
+
+def create_chat_view(req):
+    """Создание канала"""
+    if req.method == 'POST':
+        data = req.POST.dict()
+        chat = Chat()
+        chat.name = data['name']
+        chat.save()
+
+        users = data['username'].replace("@", '').replace(' ', '').split(',')
+        create_chat(title=chat.name, users=users)
+        return redirect('main', 'chats')
+
+    return render(req, 'work/createchat.html')

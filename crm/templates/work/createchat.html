@@ -13,21 +13,17 @@
                 <table class="table">
                     <tbody style="width: 30vw;">
                         <tr>
-                            <td>Название канала</td>
+                            <td>Название гильдии</td>
                             <td><input type="text" name="name" class="searchInpt" style="border: 1px solid rgba(142,148,177,.5);"></td>
                         </tr>
                         <tr>
-                            <td>User_name канала</td>
+                            <td>User_name пользователей через запятую</td>
                             <td><input type="text" name="username" class="searchInpt" style="border: 1px solid rgba(142,148,177,.5);"></td>
-                        </tr>
-                        <tr>
-                            <td>Описание</td>
-                            <td><input type="text" name="desc" class="searchInpt" style="border: 1px solid rgba(142,148,177,.5); height: 200px; width: 300px;"></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <a href="{% url 'main' 'channels' %}"><button class="button" type="button">Назад</button></a>
+            <a href="{% url 'main' 'chats' %}"><button class="button" type="button">Назад</button></a>
             <button class="button" type="submit">Сохранить</button>
         </form>
 

@@ -4,6 +4,29 @@
 {% block main %}
     <link rel="stylesheet" href="{% static 'css/work/main.css' %}">
 
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="madal-title"><h3 class="title-blok mt-3 ml-3">Добавление пользователя</h1></div>
+                </div>
+              
+                <form enctype="multipart/form-data" action="" method="post">
+                    <div class="modal-body">
+                        {% csrf_token %}
+                        <input class="form-control searchInpt" type="text" placeholder="Номер телефона" name="phone">
+                        <input class="form-control searchInpt" type="text" placeholder="Username @..." name="username">
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default mt-3" data-dismiss="modal">Назад</button>
+                        <button type="submit" class="btn btn-primary mt-3">Сохранить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <div class="mainPage">
 
         <div class="nav-bar">
@@ -64,6 +87,12 @@
                     {% if page == 'channels' %}
                         <a href="{% url 'create_channel' %}"><button type="button" class="button" style="margin: 0 75%;">Добавить</button></a>
                     {% endif %}
+                    {% if page == 'users' %}
+                        <button type="button" class="button" data-toggle="modal" data-target="#myModal" style="margin: 0 75%;">Добавить</button>
+                    {% endif %}
+                    {% if page == 'chats' %}
+                        <a href="{% url 'create_chat' %}"><button type="button" class="button" style="margin: 0 75%;">Добавить</button></a>
+                    {% endif %}
                 </div>
             </div>
 
@@ -114,10 +143,63 @@
             {% endif %}
 
 
+            {% if page == 'chats' %}
+
+                {% for channel in channels %}
+                    <div class="el" id="{{channel.name}}">
+                        <a href="{% url 'channel' channel.id %}" style="color:#000;">
+                            <div class="templateCard">
+                                <div class="card-body">
+                                    {{channel.name}}
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+
+                <script>
+                    var el = document.getElementById('chats')
+                    el.classList.add('navItemActive')
+                </script>
+
+            {% endif %}
+
+
+            {% if page == 'users' %}
+
+                {% for user in users %}
+                    <div class="el" id="{{user.phone}}">
+                        <a href="{% url 'staf' user.id %}" style="color:#000;">
+                            <div class="templateCard">
+                                <div class="card-body">
+                                    {{user.phone}}
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+
+                <script>
+                    var el = document.getElementById('users')
+                    el.classList.add('navItemActive')
+                </script>
+
+            {% endif %}
+
+
         </div>
 
 
 
     </div>
+
+    <script>
+        var myModal = document.getElementById('myModal')
+        var myInput = document.getElementById('myInput')
+
+        myModal.addEventListener('shown.bs.modal', function () {
+        myInput.focus()
+        })
+    </script>     
 
 {% endblock main %}

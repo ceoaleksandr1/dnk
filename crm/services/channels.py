@@ -42,12 +42,15 @@ def delete_channel(username):
     )
 
 
-# def create_chat():
-#     """Создание чата"""
-#     client = _get_client()
-#     client(
-#         CreateChatRequest()
-#     )
+def create_chat(title, users):
+    """Создание чата"""
+    client = _get_client()
+    client(
+        CreateChatRequest(
+            users=users,
+            title=title
+        )
+    )
 
 
 def _get_client(): 
