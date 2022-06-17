@@ -85,9 +85,9 @@ def _get_client():
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
 
-    api_id=17780534
-    api_hash='96fd2fa9cca58b34eafb5bd51ba342b2'
-    name='TeleSender'
+    api_id=0
+    api_hash=''
+    name=''
 
     client = TelegramClient(name, api_id, api_hash, loop=loop)
     client.start()
